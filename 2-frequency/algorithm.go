@@ -1,6 +1,9 @@
 package main
 
-import "github.com/go-distil/distil"
+import (
+	"github.com/go-distil/distil"
+	"math"
+)
 
 //This is our distillate algorithm
 type FrequencyDistiller struct {
@@ -41,8 +44,43 @@ func (d *FrequencyDistiller) Rebase() distil.Rebaser {
 	return distil.RebasePadSnap(d.basefreq)
 }
 
+func angwrap(d float64) float64 {
+	if (d > 180) {
+		return d - 360
+	} else if (d < -180) {
+		return d + 360
+	} else {
+		return d
+	}
+}
+
 // This is our main algorithm. It will automatically be called with chunks
 // of data that require processing by the engine.
 func (d *FrequencyDistiller) Process(in *distil.InputSet, out *distil.OutputSet) {
-
+	/* Output 0 is freq_1s.
+	 * Output 1 is freq_c37.
+	 * Taken from Michael's code at https://github.com/SoftwareDefinedBuildings/distil_algs/blob/master/src/scala/guru/sensor/distil/Frequency.scala
+	 */
+	var ns int = in.NumSamples(0)
+	var i int
+	for i = 0; i < ns; i++ {
+		var time int64 = in.Get(0, i).T
+		
+		var v1s float64 = angwrap(in.Get(0, i).V - in.Get(0, i - 120).V) / 360.0 + 60.0
+		if !math.IsNaN(v1s) {
+			out.Add(0, time, v1s)
+		}
+		
+		var p1 = in.Get(0, i).V
+		var p2 = in.Get(0, i - 1).V
+		var p3 = in.Get(0, i - 2).V
+		var p4 = in.Get(0, i - 3).V
+		var v1 = angwrap(p1 - p2)
+		var v2 = angwrap(p2 - p3)
+		var v3 = angwrap(p3 - p4)
+		var c37 = 60.0 + (((6.0*(v1)+3.0*(v2)+1.0*(v3))/10)*((120.0/360.0)))
+		if !math.IsNaN(c37) {
+			out.Add(1, time, c37)
+		}
+	}
 }
