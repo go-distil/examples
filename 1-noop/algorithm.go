@@ -1,6 +1,6 @@
 package main
 
-import "github.com/go-distil/distil"
+import "gopkg.in/distil.v1"
 
 //This is our distillate algorithm
 type NopDistiller struct {

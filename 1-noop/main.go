@@ -1,6 +1,6 @@
 package main
 
-import "github.com/go-distil/distil"
+import "gopkg.in/distil.v1"
 
 const BTrDB = "btrdb.bts.sensor.guru:4410"
 const Mongo = "btrdb.bts.sensor.guru"

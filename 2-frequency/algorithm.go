@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/go-distil/distil"
 	"math"
+
+	"gopkg.in/distil.v1"
 )
 
 //This is our distillate algorithm
@@ -45,9 +46,9 @@ func (d *FrequencyDistiller) Rebase() distil.Rebaser {
 }
 
 func angwrap(d float64) float64 {
-	if (d > 180) {
+	if d > 180 {
 		return d - 360
-	} else if (d < -180) {
+	} else if d < -180 {
 		return d + 360
 	} else {
 		return d
@@ -65,20 +66,20 @@ func (d *FrequencyDistiller) Process(in *distil.InputSet, out *distil.OutputSet)
 	var i int
 	for i = 0; i < ns; i++ {
 		var time int64 = in.Get(0, i).T
-		
-		var v1s float64 = angwrap(in.Get(0, i).V - in.Get(0, i - 120).V) / 360.0 + 60.0
+
+		var v1s float64 = angwrap(in.Get(0, i).V-in.Get(0, i-120).V)/360.0 + 60.0
 		if !math.IsNaN(v1s) {
 			out.Add(0, time, v1s)
 		}
-		
+
 		var p1 = in.Get(0, i).V
-		var p2 = in.Get(0, i - 1).V
-		var p3 = in.Get(0, i - 2).V
-		var p4 = in.Get(0, i - 3).V
+		var p2 = in.Get(0, i-1).V
+		var p3 = in.Get(0, i-2).V
+		var p4 = in.Get(0, i-3).V
 		var v1 = angwrap(p1 - p2)
 		var v2 = angwrap(p2 - p3)
 		var v3 = angwrap(p3 - p4)
-		var c37 = 60.0 + (((6.0*(v1)+3.0*(v2)+1.0*(v3))/10)*((120.0/360.0)))
+		var c37 = 60.0 + (((6.0*(v1) + 3.0*(v2) + 1.0*(v3)) / 10) * (120.0 / 360.0))
 		if !math.IsNaN(c37) {
 			out.Add(1, time, c37)
 		}
