@@ -1,11 +1,17 @@
 package main
 
 import "gopkg.in/distil.v1"
-
-const BTrDB = "btrdb.bts.sensor.guru:4410"
-const Mongo = "btrdb.bts.sensor.guru"
+import "os"
+import "fmt"
 
 func main() {
+	BTrDB := os.Getenv("BTRDB_ADDR")
+	Mongo := os.Getenv("MONGO_ADDR")
+	if BTrDB == "" || Mongo == "" {
+		fmt.Println("Missing BTRDB_ADDR or MONGO_ADDR")
+		os.Exit(1)
+	}
+
 	// Get a handle to BTrDB and Mongo. go-distil is implemented as a library
 	// so there is no other distillate service to connect to
 	ds := distil.NewDISTIL(BTrDB, Mongo)
