@@ -35,10 +35,10 @@ func main() {
 		UniqueName: "demo_noop_distillate",
 		// These are inputs to the distillate that will be loaded
 		// and presented to Process()
-		InputPaths: []string{"/LBNL/switch_a6/L1ANG"},
+		InputPaths: []string{"/LBNL/a6_bus1/L1MAG"},
 		// These are the output paths for the distillate. They must
 		// also be strictly unique.
-		OutputPaths: []string{"/LBNL/switch_a6/L1ANG"},
+		OutputPaths: []string{"/godistil/a6_bus1/L1MAG"},
 	})
 
 	//Now we tell the DISTIL library to keep all the registered distillates
