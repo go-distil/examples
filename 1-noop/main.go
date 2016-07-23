@@ -38,7 +38,7 @@ func main() {
 		InputPaths: []string{"/LBNL/a6_bus1/L1MAG"},
 		// These are the output paths for the distillate. They must
 		// also be strictly unique.
-		OutputPaths: []string{"/godistil/a6_bus1/L1MAG"},
+		OutputPaths: []string{"/LBNL/a6_bus1/L1MAG"},
 	})
 
 	//Now we tell the DISTIL library to keep all the registered distillates
