@@ -25,7 +25,7 @@ func main() {
 	path := os.Getenv("LOC")
 
 	if ds.StreamFromPath(path + "/C1ANG") != nil {
-		instance1 := &RealReactivePowerDistiller{}
+		instance1 := &RealReactivePowerDistiller{basefreq: 120}
 		registration1 := &distil.Registration{
 			Instance:   instance1,
 			UniqueName: "pq1_" + strings.Replace(path, "/", "_", -1),
@@ -35,7 +35,7 @@ func main() {
 		ds.RegisterDistillate(registration1)
 	}
 	if ds.StreamFromPath(path + "/C2ANG") != nil {
-		instance2 := &RealReactivePowerDistiller{}
+		instance2 := &RealReactivePowerDistiller{basefreq: 120}
 		registration2 := &distil.Registration{
 			Instance:   instance2,
 			UniqueName: "pq2_" + strings.Replace(path, "/", "_", -1),
@@ -45,7 +45,7 @@ func main() {
 		ds.RegisterDistillate(registration2)
 	}
 	if ds.StreamFromPath(path + "/C3ANG") != nil {
-		instance3 := &RealReactivePowerDistiller{}
+		instance3 := &RealReactivePowerDistiller{basefreq: 120}
 		registration3 := &distil.Registration{
 			Instance:   instance3,
 			UniqueName: "pq3_" + strings.Replace(path, "/", "_", -1),
