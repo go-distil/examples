@@ -16,6 +16,22 @@ func main() {
 	// so there is no other distillate service to connect to
 	ds := distil.NewDISTIL(BTrDB, Mongo)
 
+	// Clearly you could have more advanced logic here, but this serves as
+	// a good example. Register a frequency distillate for L1ANG of
+	// every PMU that has a nonempty L1MAG stream.
+	// for _, path := range ds.ListExistingUpmuPaths() {
+	// 	trimPath := strings.TrimPrefix(path, "/upmu/")
+	// 	instance := &NopDistiller{}
+	// 	registration := &distil.Registration{
+	// 		Instance:   instance,
+	// 		UniqueName: "noop_" + strings.Replace(trimPath, "/", "_", -1),
+	// 		InputPaths: []string{path},
+	// 		OutputPaths: []string{path},
+	// 	}
+	// 	ds.RegisterDistillate(registration)
+	// }
+
+
 	// Construct an instance of your distillate. If you had parameters for
 	// the distillate you would maybe have a custom constructor. You could
 	// also load the parameters from a config file, or some heuristic
