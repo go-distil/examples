@@ -1,23 +1,14 @@
 package main
 
 import "gopkg.in/distil.v1"
-import "os"
-import "fmt"
 
 func main() {
-	BTrDB := os.Getenv("BTRDB_ADDR")
-	Mongo := os.Getenv("MONGO_ADDR")
-	if BTrDB == "" || Mongo == "" {
-		fmt.Println("Missing BTRDB_ADDR or MONGO_ADDR")
-		os.Exit(1)
-	}
-
 	// Get a handle to BTrDB and Mongo. go-distil is implemented as a library
 	// so there is no other distillate service to connect to
-	ds := distil.NewDISTIL(BTrDB, Mongo)
+	ds := distil.NewDISTIL(distil.FromEnvVars())
 
 	// Clearly you could have more advanced logic here, but this serves as
-	// a good example. Register a frequency distillate for L1ANG of
+	// a good example. This would register the distillate for L1ANG of
 	// every PMU that has a nonempty L1MAG stream.
 	// for _, path := range ds.ListExistingUpmuPaths() {
 	// 	trimPath := strings.TrimPrefix(path, "/upmu/")
@@ -30,7 +21,6 @@ func main() {
 	// 	}
 	// 	ds.RegisterDistillate(registration)
 	// }
-
 
 	// Construct an instance of your distillate. If you had parameters for
 	// the distillate you would maybe have a custom constructor. You could

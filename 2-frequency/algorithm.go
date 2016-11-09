@@ -45,6 +45,7 @@ func (d *FrequencyDistiller) Rebase() distil.Rebaser {
 	return distil.RebasePadSnap(d.basefreq)
 }
 
+// A little utility function used by the algorithm
 func angwrap(d float64) float64 {
 	if d > 180 {
 		return d - 360
@@ -60,7 +61,6 @@ func angwrap(d float64) float64 {
 func (d *FrequencyDistiller) Process(in *distil.InputSet, out *distil.OutputSet) {
 	/* Output 0 is freq_1s.
 	 * Output 1 is freq_c37.
-	 * Taken from Michael's code at https://github.com/SoftwareDefinedBuildings/distil_algs/blob/master/src/scala/guru/sensor/distil/Frequency.scala
 	 */
 	var ns int = in.NumSamples(0)
 	var i int

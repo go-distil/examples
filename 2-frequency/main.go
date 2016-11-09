@@ -1,9 +1,10 @@
 package main
 
 import (
-	"strings"
-	"os"
 	"fmt"
+	"os"
+	"strings"
+
 	"gopkg.in/distil.v1"
 )
 
@@ -13,22 +14,17 @@ import (
 //  - automatic generation of algorithm instances
 
 func main() {
-	BTrDB := os.Getenv("BTRDB_ADDR")
-	Mongo := os.Getenv("MONGO_ADDR")
-	if BTrDB == "" || Mongo == "" {
-		fmt.Println("Missing BTRDB_ADDR or MONGO_ADDR")
-		os.Exit(1)
-	}
-
 	// Use default connection params, this makes the resulting executable
 	// portable to different installations
-	ds := distil.NewDISTIL(BTrDB, Mongo)
+	ds := distil.NewDISTIL(distil.FromEnvVars())
 
-	// Clearly you could have more advanced logic here, but this serves as
-	// a good example. Register a frequency distillate for L1ANG of
-	// every PMU that has a nonempty L1MAG stream.
-
+	// This will register a distillate that processes a path
+	// read from an environment variable
 	path := os.Getenv("REF_PMU_PATH")
+	if path == "" {
+		fmt.Println("Missing $REF_PMU_PATH")
+		os.Exit(1)
+	}
 	ds.RegisterDistillate(&distil.Registration{
 		// The class that implements your algorithm
 		Instance: &FrequencyDistiller{basefreq: 120},
@@ -43,7 +39,7 @@ func main() {
 		InputPaths: []string{path + "/L1ANG"},
 		// These are the output paths for the distillate. They must
 		// also be strictly unique.
-		OutputPaths: []string{path + "/freq_1s", path + "/freq_c37",},
+		OutputPaths: []string{path + "/freq_1s", path + "/freq_c37"},
 	})
 
 	ds.StartEngine()
