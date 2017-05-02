@@ -3,7 +3,7 @@ package main
 import (
 	"math"
 
-	"gopkg.in/distil.v1"
+	"gopkg.in/distil.v4"
 )
 
 //This is our distillate algorithm
@@ -39,7 +39,7 @@ func (d *DisplacementPFDistiller) Rebase() distil.Rebaser {
 func (d *DisplacementPFDistiller) Process(in *distil.InputSet, out *distil.OutputSet) {
 	/* Output 0 is real_power.
 	 * Output 1 is reactive_power.
-  */
+	 */
 	var ns int = in.NumSamples(0)
 	var i int
 	for i = 0; i < ns; i++ {
@@ -48,7 +48,7 @@ func (d *DisplacementPFDistiller) Process(in *distil.InputSet, out *distil.Outpu
 		var angI = in.Get(0, i).V
 		var angV = in.Get(1, i).V
 
-		var dpf = 100*math.Cos((angV * math.Pi / 180)-(angI * math.Pi / 180))
+		var dpf = 100 * math.Cos((angV*math.Pi/180)-(angI*math.Pi/180))
 
 		if !math.IsNaN(dpf) {
 			out.Add(0, time, dpf)

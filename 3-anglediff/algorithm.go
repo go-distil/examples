@@ -3,7 +3,7 @@ package main
 import (
 	"math"
 
-	"gopkg.in/distil.v1"
+	"gopkg.in/distil.v4"
 )
 
 //This is our distillate algorithm

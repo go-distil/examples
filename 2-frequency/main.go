@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"gopkg.in/distil.v1"
+	"gopkg.in/distil.v4"
 )
 
 // This example extends #1 to add a few new things:
@@ -16,7 +16,7 @@ import (
 func main() {
 	// Use default connection params, this makes the resulting executable
 	// portable to different installations
-	ds := distil.NewDISTIL(distil.FromEnvVars())
+	ds := distil.NewDISTIL()
 
 	// This will register a distillate that processes a path
 	// read from an environment variable
@@ -40,6 +40,8 @@ func main() {
 		// These are the output paths for the distillate. They must
 		// also be strictly unique.
 		OutputPaths: []string{path + "/freq_1s", path + "/freq_c37"},
+		// The units for the distillate
+		OutputUnits: []string{"hz", "hz"},
 	})
 
 	ds.StartEngine()

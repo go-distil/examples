@@ -1,26 +1,11 @@
 package main
 
-import "gopkg.in/distil.v1"
+import "gopkg.in/distil.v4"
 
 func main() {
-	// Get a handle to BTrDB and Mongo. go-distil is implemented as a library
+	// Get a handle to BTrDB. go-distil is implemented as a library
 	// so there is no other distillate service to connect to
-	ds := distil.NewDISTIL(distil.FromEnvVars())
-
-	// Clearly you could have more advanced logic here, but this serves as
-	// a good example. This would register the distillate for L1ANG of
-	// every PMU that has a nonempty L1MAG stream.
-	// for _, path := range ds.ListExistingUpmuPaths() {
-	// 	trimPath := strings.TrimPrefix(path, "/upmu/")
-	// 	instance := &NopDistiller{}
-	// 	registration := &distil.Registration{
-	// 		Instance:   instance,
-	// 		UniqueName: "noop_" + strings.Replace(trimPath, "/", "_", -1),
-	// 		InputPaths: []string{path},
-	// 		OutputPaths: []string{path},
-	// 	}
-	// 	ds.RegisterDistillate(registration)
-	// }
+	ds := distil.NewDISTIL()
 
 	// Construct an instance of your distillate. If you had parameters for
 	// the distillate you would maybe have a custom constructor. You could
@@ -41,10 +26,12 @@ func main() {
 		UniqueName: "demo_noop_distillate",
 		// These are inputs to the distillate that will be loaded
 		// and presented to Process()
-		InputPaths: []string{"/LBNL/a6_bus1/L1MAG"},
+		InputPaths: []string{"upmu/rpu/hunter_1224/L1MAG"},
 		// These are the output paths for the distillate. They must
 		// also be strictly unique.
-		OutputPaths: []string{"/LBNL/a6_bus1/L1MAG"},
+		OutputPaths: []string{"distil/rpu/hunter_1224/L1MAG"},
+		// These are the units for the output paths
+		OutputUnits: []string{"degrees"},
 	})
 
 	//Now we tell the DISTIL library to keep all the registered distillates

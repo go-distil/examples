@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"strings"
 )
-import "gopkg.in/distil.v1"
+import "gopkg.in/distil.v4"
 import "os"
 
 func main() {
 	// Use default connection params, this makes the resulting executable
 	// portable to different installations
-	ds := distil.NewDISTIL(distil.FromEnvVars())
+	ds := distil.NewDISTIL()
 
 	path := os.Getenv("LOC")
 	if path == "" {
@@ -25,6 +25,7 @@ func main() {
 			UniqueName:  "dpf1_" + strings.Replace(path, "/", "_", -1),
 			InputPaths:  []string{path + "/C1ANG", path + "/L1ANG"},
 			OutputPaths: []string{path + "/L1DPF"},
+			OutputUnits: []string{"DPF"},
 		}
 		ds.RegisterDistillate(registration1)
 	}
@@ -35,6 +36,7 @@ func main() {
 			UniqueName:  "dpf2_" + strings.Replace(path, "/", "_", -1),
 			InputPaths:  []string{path + "/C2ANG", path + "/L2ANG"},
 			OutputPaths: []string{path + "/L2DPF"},
+			OutputUnits: []string{"DPF"},
 		}
 		ds.RegisterDistillate(registration2)
 	}
@@ -45,6 +47,7 @@ func main() {
 			UniqueName:  "dpf3_" + strings.Replace(path, "/", "_", -1),
 			InputPaths:  []string{path + "/C3ANG", path + "/L3ANG"},
 			OutputPaths: []string{path + "/L3DPF"},
+			OutputUnits: []string{"DPF"},
 		}
 		ds.RegisterDistillate(registration3)
 	}

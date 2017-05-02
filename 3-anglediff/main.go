@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 )
-import "gopkg.in/distil.v1"
+import "gopkg.in/distil.v4"
 import "os"
 
 // This example extends #1 to add a few new things:
@@ -15,7 +15,7 @@ import "os"
 func main() {
 	// Use default connection params, this makes the resulting executable
 	// portable to different installations
-	ds := distil.NewDISTIL(distil.FromEnvVars())
+	ds := distil.NewDISTIL()
 
 	// The path leading to the PMU, excluding the final element
 	path := os.Getenv("LOC")
@@ -40,6 +40,7 @@ func main() {
 			UniqueName:  "anglediff_L" + string(order[i]) + "_" + strings.Replace(path, "/", "_", -1) + "_L" + string(refOrder[i]) + "_" + strings.Replace(refPath, "/", "_", -1),
 			InputPaths:  []string{path + "/L" + string(order[i]) + "ANG", refPath + "/L" + string(refOrder[i]) + "ANG"},
 			OutputPaths: []string{path + "/anglediff_L" + string(order[i]) + "_rel_" + strings.Replace(refPath, "/", "_", -1) + "_L" + string(refOrder[i])},
+			OutputUnits: []string{"degrees"},
 		}
 		ds.RegisterDistillate(registration)
 	}
