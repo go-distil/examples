@@ -2,8 +2,8 @@
 
 This repo contains a number of example distillates written in Go for the DISTIL processing framework designed for use with the BTrDB time series database. The examples are well commented and increase in complexity. Each contains two files:
 
-1. main.go
-2. algorithm.go
+1. main.go - configure and run the distillate including the input/output stream names
+2. algorithm.go - contains the function that defines how to process the time series data
 
 Distillates must be compiled and can be run either from a remote system (such as your laptop) or on the server with BTrDB. Running a distillate on a remote system requires the data to stream over the network to the running distillate and then the output data must return to the server. Thus, running distillates remotely is intended for testing only. 
 
@@ -13,11 +13,11 @@ The distillate executable expects an environmental variable, `$BTRDB_ENDPOINTS`,
 
 ## 1. Noop
 
-This is the first example, it does the bare minimum required to interface with BTrDB and the DISTIL engine, and copy one stream to another. If this program is left running, any changes in the given stream will manifest in the output stream. It hardcodes the address of the server and the streams so you will need to modify it before you run it yourself.
+This is the first example, it does the bare minimum required to interface with BTrDB and the DISTIL engine, and copies one stream to another. If this program is left running, any changes in the given stream will manifest in the output stream. It hardcodes the input and output streams so you will need to modify it before you run it yourself.
 
-## Frequency
+## 2. Frequency
 
-This is a more realistic example, it gets the server addresses from the environment variable `$BTRDB_ENDPOINTS`. It then looks for all uPMUs and creates an instance of the frequency distillate for each L1 channel. By following this method, it is easy to make a program that "automatically" locates new uPMUs and computes distillates on them, removing the need to modify the
+This is a more realistic example. It gets the server addresses from the environment variable `$BTRDB_ENDPOINTS`. It then looks for all uPMUs and creates an instance of the frequency distillate for each L1 channel. By following this method, it is easy to make a program that "automatically" locates new uPMUs and computes distillates on them, removing the need to modify the
 distillate code or maintain a configuration file. It also makes use of the Rebaser and Lead time.
 
 
