@@ -10,11 +10,6 @@ import (
 	"gopkg.in/distil.v4"
 )
 
-// This example extends #1 to add a few new things:
-//	- loading DB params from the environment variables
-//  - a more complex distillate that requires lead samples
-//  - automatic generation of algorithm instances
-
 func main() {
 	// Use default connection params, this makes the resulting executable
 	// portable to different installations
@@ -38,7 +33,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		// Get it's tags
+		// Get its tags
 		tags, err := st.Tags(context.Background())
 		if err != nil {
 			panic(err)
